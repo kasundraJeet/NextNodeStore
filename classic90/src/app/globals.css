@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300&display=swap");
+
+:root {
+  --black: #060707;
+  --orange: #ef9854;
+  --blue: #bae1eb;
+  --purple: #c8b6e8;
+  --pink: #ed98dc;
+  --green: #d9e8b6;
+  --nude: #fff8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lexend", sans-serif;
+  font-weight: 300;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  background-color: var(--nude);
+}
+
+input {
+  background-color: white;
+  border: 1px solid var(--black);
+  padding: 10px 16px;
+  color: var(--black);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: var(--black);
+  opacity: 0.4;
+  font-weight: 400;
+}
+
+.btn {
+  border: 1px solid var(--black);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 48px;
+  cursor: pointer;
+  color: var(--black);
+  letter-spacing: 1px;
+}
+
+.btn.type1 {
+  background-color: var(--green);
+}
+
+.btn.type2 {
+  background-color: white;
+}
+
+.offer-scroller {
+  width: 100%;
+  margin: 16px 0;
+  background-color: var(--orange);
+  padding: 22px 0;
+}
+
+.offer--item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 32px;
+}
+
+.offer--item h4 {
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.container {
+  width: 100%;
+  max-width: 1232px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 36px;
+  font-weight: 600;
+  padding: 8px 40px;
+  border: 1px solid var(--black);
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  background-color: var(--purple);
+}
+
+
+.two-col{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.four-col{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
