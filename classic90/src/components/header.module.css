@@ -4,6 +4,10 @@
   padding: 20px 0;
 }
 
+.unique_headline_section{
+background-color: transparent !important;
+}
+
 .headline_item {
   display: flex;
   align-items: center;

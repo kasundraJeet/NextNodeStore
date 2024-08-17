@@ -6,3 +6,5 @@ export { default as BannerSection } from "./BannerSection";
 export { default as CollectionList } from "./CollectionList";
 export { default as NewsLetterSection } from "./NewsLetterSection";
 export { default as SideDrawer } from "./SideDrawer";
+export { default as HeaderUnique } from "./HeaderUnique";
+export { default as CheckOutItems } from "./CheckOutItems";
