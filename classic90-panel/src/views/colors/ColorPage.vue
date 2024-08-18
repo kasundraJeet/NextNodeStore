@@ -1,4 +1,7 @@
 <script setup>
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as z from 'zod'
 import {
   Table,
   TableBody,
@@ -7,11 +10,27 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import LayoutWrapper from '@/components/layout/LayoutWrapper.vue'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import LayoutWrapper from '@/components/layout/LayoutWrapper.vue'
 import { ref } from 'vue'
 import { Pagination } from '@/components/custom'
-import { ChevronDown  , EllipsisVertical} from 'lucide-vue-next'
+import { ChevronDown, EllipsisVertical } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -135,6 +154,19 @@ const colorList = ref([
     colour_total_item: "23",
   }
 ])
+
+const formSchema = toTypedSchema(z.object({
+  colorName: z.string().min(2).max(16),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+}))
+
+const form = useForm({
+  validationSchema: formSchema,
+})
+
+const onSubmit = form.handleSubmit((values) => {
+  console.log('Form submitted!', values)
+})
 </script>
 
 <template>
@@ -176,17 +208,20 @@ const colorList = ref([
           </TableHeader>
           <TableBody>
             <TableRow v-for="colour in colorList" :key="colour.id">
-              <TableCell>
+              <TableCell class="flex items-center gap-2">
+                <div class="min-w-4 min-h-4 border border-border rounded-full"
+                  :style="{ backgroundColor: colour.colour }">
+                </div>
                 {{ colour.coloursName }}
               </TableCell>
               <TableCell>{{ colour.colour_popularity }}</TableCell>
               <TableCell>{{ colour.colour_total_item }}</TableCell>
               <TableCell class="text-end">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger as-child>
                     <Button variant="ghost" size="icon">
-               <EllipsisVertical class="w-4 h-4" />
-      </Button>
+                      <EllipsisVertical class="w-4 h-4" />
+                    </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent class="w-44" align="end">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -204,5 +239,56 @@ const colorList = ref([
         </div>
       </div>
     </div>
+
+    <Dialog>
+    <DialogTrigger as-child>
+      <Button variant="outline">
+        Edit Profile
+      </Button>
+    </DialogTrigger>
+    <DialogContent class="sm:max-w-md">
+      <form @submit="onSubmit" class="space-y-4">
+      <DialogHeader>
+        <DialogTitle>Add Color</DialogTitle>
+        <DialogDescription>
+          Make changes to your Color here. Click save when you're done.
+        </DialogDescription>
+      </DialogHeader>
+      <div class="w-full space-y-4">
+        <FormField v-slot="{ componentField }" name="color">
+      <FormItem>
+        <FormLabel>Color</FormLabel>
+        <FormControl>
+          <div class="flex items-stretch border border-border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-white">
+          <div class="max-w-20 w-full border-r border-border">
+            <Input type="color" class="!border-none !outline-none !ring-0 focus:!rounded-none" v-bind="componentField" />
+          </div>
+          <div class="w-full">
+          <Input type="text" class="!border-none !outline-none !ring-0 focus:!rounded-none" placeholder="white" v-bind="componentField" />
+          </div>
+        </div>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+    <FormField v-slot="{ componentField }" name="colorName">
+      <FormItem>
+        <FormLabel>Color Name</FormLabel>
+        <FormControl>
+          <Input type="text" placeholder="white" v-bind="componentField" />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+      </div>
+      <DialogFooter>
+        <Button type="submit">
+          Save changes
+        </Button>
+      </DialogFooter>
+    </form>
+    </DialogContent>
+  </Dialog>
+
   </LayoutWrapper>
 </template>
