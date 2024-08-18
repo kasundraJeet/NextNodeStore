@@ -17,6 +17,21 @@ const router = createRouter({
           component: () => import('@/views/product/ProductCreatePage.vue')
         }
       ]
+    },
+    {
+      path: '/settings',
+      children: [
+        {
+          path: '',
+          name: 'settings',
+          component: () => import('@/views/SettingPage.vue')
+        },
+        {
+          path: 'colors',
+          name: 'colorPage',
+          component: () => import('@/views/colors/ColorPage.vue')
+        }
+      ]
     }
   ]
 })

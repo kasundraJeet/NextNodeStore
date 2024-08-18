@@ -81,3 +81,8 @@
 #app {
   @apply w-full h-full;
 }
+
+
+.list-container{
+  @apply w-full max-w-4xl mx-auto
+}

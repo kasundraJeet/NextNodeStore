@@ -97,7 +97,7 @@ const sidebarLinkList = ref([
           {
             id: '#sublink6',
             title: 'Available Color',
-            goToPath: '/',
+            goToPath: '/settings/colors',
             activePaths: ['/']
           }
         ]
