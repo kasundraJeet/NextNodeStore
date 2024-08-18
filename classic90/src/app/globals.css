@@ -109,3 +109,76 @@ input::placeholder {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
+
+.checkout-tab-list{
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  list-style: none;
+}
+
+.checkout-tab-list button{
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid var(--black);
+  background-color: transparent;
+  border-radius: 999px;
+  color: var(--black);
+  font-size: 16px;
+  min-width: 150px;
+  max-width: 150px;
+  cursor: pointer;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  transition: background-color 0.2s ;
+  -webkit-transition: background-color 0.2s ;
+  -moz-transition: background-color 0.2s ;
+  -ms-transition: background-color 0.2s ;
+  -o-transition: background-color 0.2s ;
+}
+
+.checkout-tab-list button.active{
+  background-color: var(--pink);
+}
+
+.checkout-tab-list button.active:hover,
+.checkout-tab-list button.active:focus{
+  background-color: transparent;
+}
+
+.checkout-tab-list button:hover,
+.checkout-tab-list button:focus{
+  background-color: var(--pink);
+}
+
+.check-out-form{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.check-out-form h4{
+  color: black;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.check-out-form input{
+  width: 100%;
+}
+
+.check-out-form .two-col{
+  row-gap: 16px;
+  column-gap: 40px;
+}
+
+.check-out-form select{
+  width: 100%;
+  border: 1px solid var(--black);
+  background-color: white;
+}
