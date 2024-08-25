@@ -15,6 +15,11 @@ const router = createRouter({
           path: 'forget-password',
           name: 'forgetPassword',
           component: () => import('@/views/auth/ForgetPasswordPage.vue')
+        },
+        {
+          path: 'verification',
+          name: 'verification',
+          component: () => import('@/views/auth/VerificationPage.vue')
         }
       ]
     },
