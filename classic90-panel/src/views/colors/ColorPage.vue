@@ -17,7 +17,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   FormControl,
@@ -30,7 +29,7 @@ import { Input } from '@/components/ui/input'
 import LayoutWrapper from '@/components/layout/LayoutWrapper.vue'
 import { ref } from 'vue'
 import { Pagination } from '@/components/custom'
-import { ChevronDown, EllipsisVertical } from 'lucide-vue-next'
+import { ChevronDown, EllipsisVertical , Plus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -45,6 +44,7 @@ import {
 const showStatusBar = ref(true)
 const showActivityBar = ref(false)
 const showPanel = ref(false)
+const colorModal = ref(false)
 
 
 const colorList = ref([
@@ -164,6 +164,15 @@ const form = useForm({
   validationSchema: formSchema,
 })
 
+function addNewColor(){
+  colorModal.value = true
+}
+
+function closeDialog(){
+  alert("call function  ")
+  colorModal.value = false
+}
+
 const onSubmit = form.handleSubmit((values) => {
   console.log('Form submitted!', values)
 })
@@ -174,6 +183,11 @@ const onSubmit = form.handleSubmit((values) => {
     <div class="list-container bg-background rounded-md">
       <div class="flex items-center justify-between w-full py-2.5 px-3 border-b border-solid border-border">
         <Input type="text" placeholder="Filter colours..." class="max-w-sm" />
+        <div class="flex items-center gap-2">
+          <Button variant="outline" @click="addNewColor">
+            <Plus size="16" class="mr-2" />
+            Add color
+          </Button>
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
             <Button variant="outline" class="flex items-center gap-2">
@@ -195,6 +209,7 @@ const onSubmit = form.handleSubmit((values) => {
             </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
       </div>
       <div>
         <Table>
@@ -240,12 +255,7 @@ const onSubmit = form.handleSubmit((values) => {
       </div>
     </div>
 
-    <Dialog>
-    <DialogTrigger as-child>
-      <Button variant="outline">
-        Edit Profile
-      </Button>
-    </DialogTrigger>
+    <Dialog v-model:open="colorModal" @open-change="closeDialog">
     <DialogContent class="sm:max-w-md">
       <form @submit="onSubmit" class="space-y-4">
       <DialogHeader>
