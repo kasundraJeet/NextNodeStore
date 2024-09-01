@@ -27,10 +27,9 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-    FormDescription
 } from '@/components/ui/form'
 import { Pagination } from '@/components/custom'
-import { ChevronDown, EllipsisVertical, Plus , Info } from 'lucide-vue-next'
+import { ChevronDown, EllipsisVertical, Plus, Minus } from 'lucide-vue-next'
 import sizes from '@/lib/sizeJson'
 import * as yup from 'yup';
 import { useForm } from 'vee-validate'
@@ -45,26 +44,45 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 
-const sizeModal = ref(true)
-
 const formSchema = yup.object().shape({
-  sizeLabel: yup.string().min(2, 'Label must be at least 2 characters').max(16, 'Label must be at most 16 characters').required('Label is required'),
-  description: yup.string().required('Description is required'),
-  measurements: yup.object().shape({
-    bust: yup.string().required('Bust measurement is required'),
-    waist: yup.string().required('Waist measurement is required'),
-    hips: yup.string().required('Hips measurement is required'),
-    inseam: yup.string().required('Inseam measurement is required'),
-  })
+    sizeLabel: yup.string()
+        .min(2, 'Label must be at least 2 characters')
+        .max(16, 'Label must be at most 16 characters')
+        .required('Label is required'),
+    description: yup.string()
+        .required('Description is required'),
+    measurements: yup.object().shape({
+        bust: yup.string()
+            .matches(/^\d+(\.\d+)?(-\d+(\.\d+)?)?$/, 'Bust measurement must be a numeric value, decimal, or a range (e.g., 32, 32.5, 32-34, 32-34.5)')
+            .required('Bust measurement is required'),
+        waist: yup.string()
+            .matches(/^\d+(\.\d+)?(-\d+(\.\d+)?)?$/, 'Waist measurement must be a numeric value, decimal, or a range (e.g., 24, 24.5, 24-26, 24-26.5)')
+            .required('Waist measurement is required'),
+        hips: yup.string()
+            .matches(/^\d+(\.\d+)?(-\d+(\.\d+)?)?$/, 'Hips measurement must be a numeric value, decimal, or a range (e.g., 34, 34.5, 34-36, 34-36.5)')
+            .required('Hips measurement is required'),
+        inseam: yup.string()
+            .matches(/^\d+(\.\d+)?(-\d+(\.\d+)?)?$/, 'Inseam measurement must be a numeric value, decimal, or a range (e.g., 30, 30.5, 30-32, 30-32.5)')
+            .required('Inseam measurement is required'),
+    })
 });
 
-const form = useForm({
+const { handleSubmit, resetForm } = useForm({
     validationSchema: formSchema,
-})
+});
 
-const onSubmit = form.handleSubmit((values) => {
-    console.log('Form submitted!', values)
-})
+const onSubmit = handleSubmit((values) => {
+    console.log('Form submitted!', values);
+    resetForm();
+});
+
+const sizeModal = ref(false);
+const closeDialog = () => {
+    sizeModal.value = false;
+};
+const addNewSize = () => {
+    sizeModal.value = true;
+};
 </script>
 
 <template>
@@ -73,7 +91,7 @@ const onSubmit = form.handleSubmit((values) => {
             <div class="flex items-center justify-between w-full py-2.5 px-3 border-b border-solid border-border">
                 <Input type="text" placeholder="Filter size..." class="max-w-sm" />
                 <div class="flex items-center gap-2">
-                    <Button variant="outline" @click="addNewColor">
+                    <Button variant="outline" @click="addNewSize">
                         <Plus size="16" class="mr-2" />
                         Add New Size
                     </Button>
@@ -112,12 +130,8 @@ const onSubmit = form.handleSubmit((values) => {
                     </TableHeader>
                     <TableBody>
                         <TableRow v-for="colour in sizes" :key="colour.id">
-                            <TableCell class="flex items-center gap-2">
-                                {{ colour.sizeLabel }}
-                            </TableCell>
-                            <TableCell>
-                                <vue-json-pretty :data="colour.measurements" />
-                            </TableCell>
+                            <TableCell class="flex items-center gap-2">{{ colour.sizeLabel }}</TableCell>
+                            <TableCell><vue-json-pretty :data="colour.measurements" /></TableCell>
                             <TableCell>{{ colour.description }}</TableCell>
                             <TableCell class="text-end">
                                 <DropdownMenu>
@@ -127,7 +141,7 @@ const onSubmit = form.handleSubmit((values) => {
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent class="w-44" align="end">
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>Edit</DropdownMenuItem>
                                         <DropdownMenuItem>Delete</DropdownMenuItem>
@@ -153,50 +167,46 @@ const onSubmit = form.handleSubmit((values) => {
                         </DialogDescription>
                     </DialogHeader>
                     <div class="w-full space-y-4">
-                        <FormField v-slot="{ componentField }" name="sizeLabel">
+                        <FormField name="sizeLabel" v-slot="{ componentField }">
                             <FormItem>
                                 <FormLabel>Label</FormLabel>
                                 <FormControl>
-                                    <Input type="text" placeholder="@ex.L" v-bind="componentField" />
+                                    <Input type="text" placeholder="Size Label" v-bind="componentField" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         </FormField>
-                        <FormField v-slot="{ componentField }" name="description">
+                        <FormField name="description" v-slot="{ componentField }">
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
                                 <FormControl>
-                                    <Input type="text" placeholder="@ex.Large" v-bind="componentField" />
+                                    <Input type="text" placeholder="Description" v-bind="componentField" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         </FormField>
-                        <FormField v-slot="{ componentField }" name="measurements.bust">
-                            <FormItem>
-                                <FormLabel>Bust</FormLabel>
-                                <FormControl>
-                                    <div class="flex items-stretch gap-3">
-                                        <Input placeholder="@ex.Large" type="number" v-bind="componentField" />
-                                        <Button variant="outline" size="icon" type="button" class="min-w-10 max-w-10">
-                                            <Plus size="16"  />
-                                        </Button>
-                                    </div>
-                                </FormControl>
-                                <FormDescription><Info class="mr-1.5 w-4 h-4 inline" />In Inches</FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        </FormField>
+                        <div v-for="(measurementType, index) in ['bust', 'waist', 'hips', 'inseam']" :key="index">
+                            <FormField v-slot="{ componentField }" :name="`measurements.${measurementType}`">
+                                <FormItem>
+                                    <FormLabel>{{ measurementType.charAt(0).toUpperCase() + measurementType.slice(1) }}
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Measurement" type="text" v-bind="componentField" />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            </FormField>
+                        </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit">
-                            Save changes
-                        </Button>
+                        <Button type="submit">Save changes</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>
     </LayoutWrapper>
 </template>
+
 
 
 <style>
