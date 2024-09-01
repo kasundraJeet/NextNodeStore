@@ -4,10 +4,8 @@ import {
   CircleHelp,
   LogOut,
   Settings,
-  User,
   ReceiptText,
   ShoppingBasket,
-  ChartColumn
 } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -26,26 +24,6 @@ const sidebarLinkList = ref([
         activePaths: ['/']
       },
       {
-        id: '#link2',
-        icon: User,
-        title: 'audience',
-        childLinks: [
-          {
-            id: '#sublink1',
-            title: 'link 1',
-            goToPath: '/',
-            activePaths: ['/']
-          }
-        ]
-      },
-      {
-        id: '#link3',
-        icon: ReceiptText,
-        title: 'Posts',
-        goToPath: '/',
-        activePaths: ['/']
-      },
-      {
         id: '#link4',
         icon: ShoppingBasket,
         title: 'Product',
@@ -54,34 +32,10 @@ const sidebarLinkList = ref([
       },
       {
         id: '#link5',
-        icon: ChartColumn,
-        title: 'Income',
-        childLinks: [
-          {
-            id: '#sublink',
-            title: 'Earnings',
-            goToPath: '/',
-            activePaths: ['/']
-          },
-          {
-            id: '#sublink3',
-            title: 'Refunds',
-            goToPath: '/',
-            activePaths: ['/']
-          },
-          {
-            id: '#sublink4',
-            title: 'Declines',
-            goToPath: '/',
-            activePaths: ['/']
-          },
-          {
-            id: '#sublink5',
-            title: 'Payouts',
-            goToPath: '/',
-            activePaths: ['/']
-          }
-        ]
+        icon: ReceiptText,
+        title: 'Blog',
+        goToPath: '/create-product',
+        activePaths: ['/']
       }
     ]
   },

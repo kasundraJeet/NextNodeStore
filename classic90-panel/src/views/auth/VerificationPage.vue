@@ -45,7 +45,7 @@ const onSubmit = form.handleSubmit((values) => {
                     <Logo />
                 </div>
                 <div
-                    class="w-full max-w-md mx-auto space-y-8 border bg-gray-50 border-solid border-border rounded-lg px-5 py-6">
+                    class="w-full max-w-md mx-auto space-y-8 border bg-gray-50 dark:bg-secondary border-solid border-border rounded-lg px-5 py-6">
                     <div class="space-y-2">
                         <h1 class="font-medium text-2xl capitalize">Verify Your Code</h1>
                         <p class="text-sm">Please enter the verification code sent to your email to proceed.</p>

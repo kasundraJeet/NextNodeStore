@@ -41,7 +41,7 @@ const onSubmit = form.handleSubmit((values) => {
                     <div class="p-2">
                         <Logo />
                     </div>
-                    <div class="w-full max-w-md mx-auto space-y-8 border bg-gray-50 border-solid border-border rounded-lg px-5 py-6">
+                    <div class="w-full max-w-md mx-auto space-y-8 border bg-gray-50 dark:bg-secondary border-solid border-border rounded-lg px-5 py-6">
                         <div class="space-y-2">
                             <h1 class="font-medium text-2xl capitalize">Reset Your Password</h1>
                             <p class="text-sm">Enter your phone number to receive a verification code.</p>
