@@ -36,7 +36,7 @@ return(
           </select>
         </div>
         </div>
-  <button className="btn type1">Coutinue To Payment</button>
+            <button className="btn type1">Coutinue To Payment</button>
       </form>
       </div>
     <div>

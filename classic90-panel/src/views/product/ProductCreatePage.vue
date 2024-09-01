@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { DollarSign } from 'lucide-vue-next';
+import { DollarSign , Box  , Upload } from 'lucide-vue-next';
 import * as yup from 'yup'
 import { Input } from '@/components/ui/input'
 import LayoutWrapper from '@/components/layout/LayoutWrapper.vue'
@@ -17,6 +17,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 
+
 const formSchema = yup.object({
   productName: yup.string()
     .min(2, 'Product name is required')
@@ -31,6 +32,11 @@ const formSchema = yup.object({
 const form = useForm({
   validationSchema: formSchema,
 })
+
+
+function handleProductImage(e){
+  console.log(e)
+}
 
 const onSubmit = form.handleSubmit((values) => {
   console.log('Form submitted!', values)
@@ -96,17 +102,25 @@ const onSubmit = form.handleSubmit((values) => {
           </TabsList>
           <TabsContent value="account">
             <div class="bg-background w-full h-full border border-solid border-border p-4 rounded-lg space-y-5">
-              <div class="grid grid-cols-3 w-full gap-3">
-                <div></div>
-                <div class="col-span-2 space-y-4">
-                  <div>
-                    <ToggleGroup type="multiple" class="flex-wrap justify-start" variant="outline">
+              <div>
+                    <ToggleGroup type="single" class="flex-wrap justify-start" variant="outline">
                       <ToggleGroupItem :value="item.sizeLabel" aria-label="Toggle bold" v-for="(item, index) in sizes"
                         :key="index">
                         <p class="text-sm capitalize">{{ item.description }} ({{ item.sizeLabel }})</p>
                       </ToggleGroupItem>
                     </ToggleGroup>
-                  </div>
+             </div>
+              <div class="grid grid-cols-3 w-full gap-4">
+                <div class="w-full">
+                    <div class="w-full border border-dashed rounded-lg relative flex items-center justify-center min-h-52">
+                        <div class=" space-y-1">
+                          <Upload class="mx-auto w-6 h-6 text-secondary" />
+                          <p class="text-secondary">Upload File</p>
+                        </div>
+                        <Input type="file"  @change="handleProductImage" class=" absolute inset-0 w-full h-full opacity-0" multiple />
+                    </div>
+                </div>
+                <div class="col-span-2 space-y-4">
                   <div>
                     <div class="w-full grid grid-cols-2 gap-2.5">
                       <FormField v-slot="{ componentField }" name="productDescription">
@@ -120,7 +134,7 @@ const onSubmit = form.handleSubmit((values) => {
                               <div class="px-2">
                                 <DollarSign size="18" />
                               </div>
-                              <Input placeholder="Origin Price" v-bind="componentField"
+                              <Input placeholder="Origin Price" v-bind="componentField" type="number"
                                 class="border-0 outline-none pl-0 focus:!outline-none ring-0 focus:!ring-0  focus:!ring-offset-0" />
                             </div>
                           </FormControl>
@@ -138,7 +152,25 @@ const onSubmit = form.handleSubmit((values) => {
                               <div class="px-2">
                                 <DollarSign size="18" />
                               </div>
-                              <Input placeholder="Selling Price" v-bind="componentField"
+                              <Input placeholder="Selling Price" v-bind="componentField" type="number"
+                                class="border-0 outline-none pl-0 focus:!outline-none ring-0 focus:!ring-0  focus:!ring-offset-0" />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      </FormField>
+                      <FormField v-slot="{ componentField }" name="productDescription">
+                        <FormItem>
+                          <FormLabel>
+                            <p class="underline inline">S</p> Size Stock
+                          </FormLabel>
+                          <FormControl>
+                            <div
+                              class="border border-solid border-border w-full flex items-center rounded-lg focus-within:ring focus-within:ring-ring">
+                              <div class="px-2">
+                                <Box size="18" />
+                              </div>
+                              <Input placeholder="Stock" v-bind="componentField" type="number"
                                 class="border-0 outline-none pl-0 focus:!outline-none ring-0 focus:!ring-0  focus:!ring-offset-0" />
                             </div>
                           </FormControl>

@@ -99,6 +99,12 @@ const sidebarLinkList = ref([
             title: 'Available Colors',
             goToPath: '/settings/colors',
             activePaths: ['/']
+          },
+          {
+            id: '#sublink7',
+            title: 'Available Sizes',
+            goToPath: '/settings/size',
+            activePaths: ['/']
           }
         ]
       }
@@ -106,7 +112,7 @@ const sidebarLinkList = ref([
   }
 ])
 
-const openCollapsible = ref('') // Track the currently open collapsible
+const openCollapsible = ref('')
 
 const toggleCollapsible = (id) => {
   openCollapsible.value = openCollapsible.value === id ? '' : id

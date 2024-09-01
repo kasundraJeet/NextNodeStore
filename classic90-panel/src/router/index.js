@@ -60,6 +60,11 @@ const router = createRouter({
           path: 'colors',
           name: 'colorPage',
           component: () => import('@/views/colors/ColorPage.vue')
+        },
+        {
+          path: 'size',
+          name: 'sizePage',
+          component: () => import('@/views/size/SizePage.vue')
         }
       ]
     }
