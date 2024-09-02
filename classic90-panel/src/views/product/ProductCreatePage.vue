@@ -17,7 +17,6 @@ import {
   FormMessage
 } from '@/components/ui/form'
 
-
 const formSchema = yup.object({
   productName: yup.string()
     .min(2, 'Product name is required')
@@ -32,7 +31,6 @@ const formSchema = yup.object({
 const form = useForm({
   validationSchema: formSchema,
 })
-
 
 function handleProductImage(e){
   console.log(e)
